@@ -1,0 +1,100 @@
+@use './constants.scss' as *;
+
+/**
+ * Config constant
+ */
+$heightHeader: 50px;
+
+/* Start style component */
+body {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 0.875rem; /* ~ 14px */
+  color: $textColor;
+}
+
+/* Slide bar */
+aside.ant-layout-sider {
+  .header-logo {
+    height: $heightHeader;
+    color: white;
+    font-weight: bold;
+    background-color: $mainColor;
+  }
+}
+
+/* Header */
+header.ant-layout-header {
+  background-color: $mainColor;
+  padding: 0;
+  height: $heightHeader;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+/* hidden-scrollbar */
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+:focus {
+  outline: none !important;
+}
+
+.w-88 {
+  width: 22rem;
+}
+
+.w-96 {
+  width: 24rem;
+}
+
+.w-160 {
+  width: 40rem;
+}
+.flex-0-0-auto {
+  flex: 0 0 auto !important;
+}
+
+.fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  width: 0;
+  transition: visibility 0s linear 300ms, opacity 200ms;
+}
+
+.fadeIn {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 200ms;
+}
+.item-hover:hover .show-hover {
+  display: block;
+}
+
+/** Just for mobile mode */
+@media only screen and (max-width: 767px) {
+  /* Custome for slide bar animation text */
+  .ant-layout-sider-collapsed.slider-bar {
+    flex: 0 0 0px !important;
+    max-width: 0px !important;
+    min-width: 0px !important;
+    width: 0px !important;
+  }
+  .ant-layout-sider-collapsed .hide-20 {
+    visibility: hidden;
+    transition: all 0.2s ease 0s;
+    -webkit-transition: all 0.2s ease 0s;
+  }
+  .ant-layout-sider-collapsed .hide-05 {
+    visibility: hidden;
+    transition: all 0.05s ease 0s;
+    -webkit-transition: all 0.05s ease 0s;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .d-hide {
+    display: none !important;
+  }
+}

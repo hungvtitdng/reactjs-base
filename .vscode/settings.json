@@ -1,0 +1,22 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "git.ignoreMissingGitWarning": true,
+  "workbench.startupEditor": "newUntitledFile",
+  "window.zoomLevel": 0,
+  "editor.renderWhitespace": "all",
+  "explorer.openEditors.visible": 0,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.formatOnSave": false,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+}
