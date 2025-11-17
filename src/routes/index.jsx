@@ -1,23 +1,47 @@
+import React from 'react'
 import NotFoundPage from '../pages/error/NotFoundPage'
 import GuestLayout from '../components/layout/GuestLayout'
 import MainLayout from '../components/layout/MainLayout'
+import LazyLoadWrapper from '../components/application/LazyLoadWrapper'
 
 /**
- * Get List Route Modules.
- *
- * @returns {[]}
+ * Auto import tất cả pages dưới ../pages (dùng cho lazy load)
+ */
+const pageModules = import.meta.glob('../pages/**/*.jsx')
+
+/**
+ * Get List Route Modules (public / private)
  */
 const publicRoutes = import.meta.glob('./public/**/*.jsx', { eager: true })
 const privateRoutes = import.meta.glob('./private/**/*.jsx', { eager: true })
 
+/**
+ * Parse route module
+ */
 const parseModules = (modules) => {
   const routes = []
   const paths = []
 
   Object.values(modules).forEach((mod) => {
     if (mod.default) {
-      routes.push(...mod.default)
-      paths.push(...mod.default.map((o) => o.path))
+      const parsed = mod.default.map((route) => {
+        const matchedPath = Object.keys(pageModules).find((key) => {
+          const componentName = route.component.toLowerCase()
+
+          return key.toLowerCase().endsWith(`/pages/${componentName}.jsx`) ||
+                key.toLowerCase().endsWith(`/pages/${componentName}/index.jsx`)
+        })
+
+        const Component = React.lazy(pageModules[matchedPath])
+
+        return {
+          ...route,
+          component: () => <LazyLoadWrapper component={Component} />,
+        }
+      }).filter(Boolean)
+
+      routes.push(...parsed)
+      paths.push(...parsed.map((o) => o.path))
     }
   })
 
@@ -27,22 +51,25 @@ const parseModules = (modules) => {
   }
 }
 
+const parsedPublic = parseModules(publicRoutes)
+const parsedPrivate = parseModules(privateRoutes)
+
 const routes = [
   {
-    path: parseModules(publicRoutes).paths,
+    path: parsedPublic.paths,
     exact: true,
     requiredAuth: false,
     restricted: true,
     component: GuestLayout,
-    routes: parseModules(publicRoutes).routes,
+    routes: parsedPublic.routes,
   },
   {
-    path: parseModules(privateRoutes).paths,
+    path: parsedPrivate.paths,
     exact: true,
     requiredAuth: true,
     restricted: false,
     component: MainLayout,
-    routes: parseModules(privateRoutes).routes,
+    routes: parsedPrivate.routes,
   },
   {
     path: '*',
