@@ -29,7 +29,8 @@ const handleError = (error) => {
 }
 
 export const errorException = (error) => {
-  const statusCode = error.response?.status
+  console.log('Hey Kevin 🚀:111', error);
+  const statusCode = error?.response?.status
 
   switch (statusCode) {
     case 401:
@@ -56,7 +57,11 @@ export const errorException = (error) => {
       break
 
     default:
-      notifyError(`${statusCode} ${error.response?.data?.message}`)
+      if (statusCode) {
+        notifyError(`${statusCode} ${error.response?.data?.message}`)
+      } else {
+        notifyError(error.message)
+      }
       break
   }
 
