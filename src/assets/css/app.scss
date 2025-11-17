@@ -62,6 +62,18 @@
   margin-top: 74px;
 }
 
+/* Menu Bar Color */
+.ant-menu-submenu-selected {
+  .ant-menu-submenu-title {
+    color: $mainColor !important;
+  }
+}
+
+.ant-menu-item-selected {
+  color: $mainColor !important;
+  background-color: rgba($mainColor, 0.1) !important;
+}
+
 /* Định kích thước ảnh trong Upload */
 .upload-300-200 .ant-upload.ant-upload-select,
 .upload-300-200 .ant-upload-list-item-container

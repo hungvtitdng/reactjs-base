@@ -95,7 +95,7 @@
     "name": "Name",
     "order": "Order",
     "address": "Address",
-    "first_name": "Tên",
+    "first_name": "First name",
     "last_name": "Last name",
     "birthday": "Birthday",
     "gender": "Gender",
@@ -113,7 +113,8 @@
     "author": "Author"
   },
   "menus": {
-    "dashboard": "Trang chủ",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
     "categories": "Categories",
     "branches": "Branches"
   }

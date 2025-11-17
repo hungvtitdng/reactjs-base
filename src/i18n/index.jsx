@@ -23,8 +23,8 @@ i18n
         translation: enUS,
       },
     },
-    fallbackLng: 'vi-VN', // use en if detected lng is not available
-    lng: 'vi-VN',
+    fallbackLng: 'en-US', // use en if detected lng is not available
+    lng: 'en-US',
     debug: true,
 
     interpolation: {
