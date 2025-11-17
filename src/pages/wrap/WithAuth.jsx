@@ -1,8 +1,8 @@
 import { hasPer } from '../../routes/permission'
-import useSelector from '../../store/modules/auth/useSelector'
+import authStore from '../../store/modules/auth'
 
 const WithAuth = ({ children, allowRoles = null }) => {
-  const { user: authUser } = useSelector()
+  const { user: authUser } = authStore.useSelector()
 
   if (hasPer(authUser?.roles, allowRoles)) {
     return children

@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next'
 import { getAccessToken } from '../../utils/helpers'
 import LoadingModal from '../../components/modal/LoadingModal'
 import Title from '../../components/title'
-import useAuthSelector from '../../store/modules/auth/useSelector'
+import authStore from '../../store/modules/auth'
 
 const UnauthorizedPage = () => {
   const { t } = useTranslation()
-  const { user: authUser } = useAuthSelector()
+  const { user: authUser } = authStore.useSelector()
 
   return (
     (getAccessToken() && !authUser) ? (

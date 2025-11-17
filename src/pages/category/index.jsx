@@ -7,14 +7,14 @@ import FormSearch from '../../components/form/SearchForm'
 import useCategoryRequest from '../../requests/useCategoryRequest'
 import { categoryCols } from './components/cols'
 import { categoryFields, categorySearchFields } from './components/fields'
-import useSelector from '../../store/modules/category/useSelector'
+import categoryStore from '../../store/modules/category'
 import UpsertModal from '../../components/modal/UpsertModal'
 
 const CategoryPage = () => {
   const { t } = useTranslation()
   const { getListCategoryRequest, updateCategoryRequest, createCategoryRequest } = useCategoryRequest()
 
-  const { loading, list, actionSuccess, submitting } = useSelector()
+  const { loading, list, actionSuccess, submitting } = categoryStore.useSelector()
 
   const [page, setPage] = useState(1)
   const [openUpsertModal, setOpenUpsertModal] = useState(false)

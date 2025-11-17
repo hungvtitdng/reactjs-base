@@ -8,13 +8,13 @@ import FormSearch from '../../components/form/SearchForm'
 import useBranchRequest from '../../requests/useBranchRequest'
 import { branchFields, branchSearchFields } from './components/fields'
 import { branchCols } from './components/cols'
-import useSelector from '../../store/modules/branch/useSelector'
+import branchStore from '../../store/modules/branch'
 import UpsertModal from '../../components/modal/UpsertModal'
 
 const BranchPage = () => {
   const { t } = useTranslation()
   const { getListBranchRequest, createBranchRequest, updateBranchRequest } = useBranchRequest()
-  const { loading, list, actionSuccess, submitting } = useSelector()
+  const { loading, list, actionSuccess, submitting } = branchStore.useSelector()
 
   const [page, setPage] = useState(1)
   const [searchParams, setSearchParams] = useState({})

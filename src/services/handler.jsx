@@ -29,7 +29,6 @@ const handleError = (error) => {
 }
 
 export const errorException = (error) => {
-  console.log('Hey Kevin 🚀:111', error);
   const statusCode = error?.response?.status
 
   switch (statusCode) {

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import history from '../../utils/history'
 import { USER_ROLES } from '../../config/constants'
 import { hasPer } from '../../routes/permission'
-import useSelector from '../../store/modules/auth/useSelector'
+import authStore from '../../store/modules/auth'
 
 const menuItems = [
   {
@@ -37,7 +37,7 @@ const menuItems = [
 
 const SideBar = ({ isCollapsed }) => {
   const { t } = useTranslation()
-  const { user: authUser } = useSelector()
+  const { user: authUser } = authStore.useSelector()
 
   // Function để xác định active menu keys (cả parent và child)
   const getActiveMenuKeys = () => {

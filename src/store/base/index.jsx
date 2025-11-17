@@ -3,9 +3,7 @@ import createBaseActions from './actions'
 import createBaseReducer, { createInitialState } from './reducer'
 import createBaseSaga from './saga'
 import createBaseApi from '../../api/base'
-
-// Export factories
-export { createUseSelector } from './useSelector'
+import { createUseSelector } from './useSelector'
 
 /**
  * Base Store Factory
@@ -254,6 +252,9 @@ export const createBaseStore = (config) => {
     ? overrides.saga(constants, actions, api)
     : (overrides.saga || baseSaga)
 
+  // 6. Create UseSelector Hook
+  const useSelector = createUseSelector(name, initialState, allActions)
+
   return {
     constants,
     actions,
@@ -263,6 +264,7 @@ export const createBaseStore = (config) => {
     name,
     allActions, // Export allActions để useSelector có thể dùng
     tasks, // Export tasks để có thể truy cập
+    useSelector, // Export useSelector hook
   }
 }
 

@@ -7,12 +7,12 @@ import Wrapper from '../wrap/Wrapper'
 import useAuthRequest from '../../requests/useAuthRequest'
 import Form from '../../components/form'
 import { loginFields } from './components/fields'
-import useSelector from '../../store/modules/auth/useSelector'
+import authStore from '../../store/modules/auth'
 
 const LoginPage = () => {
   const { t } = useTranslation()
   const { loginRequest } = useAuthRequest()
-  const { submitting } = useSelector()
+  const { submitting } = authStore.useSelector()
 
   const onFinishLogin = (values) => {
     loginRequest(values)

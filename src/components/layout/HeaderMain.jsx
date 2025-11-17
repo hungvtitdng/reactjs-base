@@ -9,7 +9,7 @@ import useAuthRequest from '../../requests/useAuthRequest'
 import { hasPer } from '../../routes/permission'
 import Avatar from '../../pages/wrap/Avatar'
 import { COLORS } from '../../config/constants'
-import useSelector from '../../store/modules/auth/useSelector'
+import authStore from '../../store/modules/auth'
 
 const MenuIcon = ({ isCollapsed, onCollapse }) => {
   const name = isCollapsed ? 'mdiMenu' : 'mdiMenuOpen'
@@ -28,7 +28,7 @@ const MenuIcon = ({ isCollapsed, onCollapse }) => {
 const HeaderMain = ({ isCollapsed, onCollapse }) => {
   const { t } = useTranslation()
   const { logoutRequest } = useAuthRequest()
-  const { user: authUser } = useSelector()
+  const { user: authUser } = authStore.useSelector()
 
   const onLogout = () => {
     logoutRequest()
@@ -97,11 +97,3 @@ const HeaderMain = ({ isCollapsed, onCollapse }) => {
 }
 
 export default memo(HeaderMain)
-
-// const mapStateToProps = createStructuredSelector({
-//   authUser: authSelectors.user(),
-// })
-
-// export default connect(
-//   mapStateToProps,
-// )(HeaderMain)
