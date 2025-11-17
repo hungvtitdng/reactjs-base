@@ -1,6 +1,6 @@
-import { createBaseStore } from '../../base'
-import history from '../../../utils/history'
-import { setToken, logout } from '../../../utils/helpers'
+import { createBaseStore } from '../base'
+import history from '../../utils/history'
+import { setToken, logout } from '../../utils/helpers'
 
 /**
  * Auth Store using Base Store Pattern

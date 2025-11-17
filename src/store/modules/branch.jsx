@@ -1,4 +1,4 @@
-import { createBaseStore } from '../../base'
+import { createBaseStore } from '../base'
 
 /**
  * Branch Store using Base Store Pattern
