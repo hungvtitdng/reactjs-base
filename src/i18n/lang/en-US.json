@@ -115,6 +115,9 @@
   "menus": {
     "dashboard": "Dashboard",
     "settings": "Settings",
+    "turnkey": "Turnkey",
+    "employee_portal": "Employee Portal",
+    "client_portal": "Client Portal",
     "categories": "Categories",
     "branches": "Branches"
   }

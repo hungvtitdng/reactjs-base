@@ -1,15 +1,14 @@
 import React, { memo } from 'react'
-import { Layout, Dropdown } from 'antd'
+import { Layout, Dropdown, Menu } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import MdiIcon from '../icon/MdiIcon'
 import Flags from './Flags'
-import history from '../../utils/history'
 import useAuthRequest from '../../requests/useAuthRequest'
-import { hasPer } from '../../routes/permission'
 import Avatar from '../../pages/wrap/Avatar'
 import { COLORS } from '../../config/constants'
 import authStore from '../../store/modules/auth'
+import { convertMenuItems, convertDropdownMenuItems } from '../../utils/helpers'
 
 const MenuIcon = ({ isCollapsed, onCollapse }) => {
   const name = isCollapsed ? 'mdiMenu' : 'mdiMenuOpen'
@@ -34,54 +33,57 @@ const HeaderMain = ({ isCollapsed, onCollapse }) => {
     logoutRequest()
   }
 
-  const onClickMenuItem = (path) => {
-    history.push(path)
-  }
-
   const menuItems = [
     {
-      key: '1',
-      className: 'pt-3 pb-3',
-      label: (
-        <div className="flex items-center" onClick={() => onClickMenuItem('/profiles')}>
-          <MdiIcon name="mdiAccountOutline" />
-          <span className="pl-4">{t('profile')}</span>
-        </div>
-      ),
+      onClick: '/profiles',
+      iconName: 'mdiAccountOutline',
+      label: 'profile',
     },
     {
-      key: '2',
-      className: 'pt-3 pb-3',
-      label: (
-        <div className="flex items-center" onClick={() => onClickMenuItem('/change-password')}>
-          <MdiIcon name="mdiShieldKeyOutline" />
-          <span className="pl-4">{t('change-password')}</span>
-        </div>
-      ),
+      onClick: '/change-password',
+      iconName: 'mdiShieldKeyOutline',
+      label: 'change-password',
     },
     { type: 'divider' },
     {
-      key: '3',
-      className: 'pt-3 pb-3',
-      label: (
-        <div className="flex items-center" onClick={onLogout}>
-          <MdiIcon name="mdiLogout" color={COLORS.RED_LIGHT} />
-          <span className="pl-4">{t('logout')}</span>
-        </div>
-      ),
+      onClick: onLogout,
+      iconName: 'mdiLogout',
+      iconColor: COLORS.RED_LIGHT,
+      label: 'logout',
     },
   ]
 
-  const items = menuItems.filter((item) => {
-    if (!item.permission) return true
+  const headerMenuItems = [
+    {
+      key: '/',
+      label: 'turnkey',
+      icon: 'layer-group',
+    },
+    {
+      key: '2',
+      label: 'employee_portal',
+      icon: 'users-cog',
+    },
+    {
+      key: '3',
+      label: 'client_portal',
+      icon: 'users',
+    },
+  ]
 
-    return hasPer(authUser?.roles, item.permission)
-  })
+  const items = convertDropdownMenuItems(menuItems, t)
 
   return (
     <Layout.Header>
       <div className="flex items-center">
         <MenuIcon isCollapsed={isCollapsed} onCollapse={onCollapse} />
+        <Menu
+          mode="horizontal"
+          className="ml-6"
+          defaultSelectedKeys={['1']}
+          items={convertMenuItems(headerMenuItems, authUser, t)}
+          disabledOverflow
+        />
       </div>
       <div className="flex justify-end items-center mr-4">
         <Dropdown placement="bottomRight" menu={{ items }} trigger={['click']}>

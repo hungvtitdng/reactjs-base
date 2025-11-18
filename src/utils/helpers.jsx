@@ -1,3 +1,4 @@
+import React from 'react'
 import { notification } from 'antd'
 import dayjs from 'dayjs'
 
@@ -8,6 +9,8 @@ import {
   DMY_FORMAT,
   YMD_FORMAT,
 } from '../config/constants'
+import { hasPer } from '../routes/permission'
+import MdiIcon from '../components/icon/MdiIcon'
 
 export const setToken = (accessToken) => {
   localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, accessToken)
@@ -84,4 +87,101 @@ export const mapConstToOptions = (constItems, t, attr) => {
     value,
     label: t(`attributes.${attr}_${value}`),
   }))
+}
+
+export const convertMenuItems = (items, authUser, t) => {
+  return items
+    .filter((item) => {
+      if (!item.permission || !authUser?.roles) {
+        return true
+      }
+
+      return hasPer(authUser?.roles, item.permission, item.isExact)
+    })
+    .map((item) => {
+      const { isExact, ...rest } = item
+
+      if (item.children) {
+        return {
+          ...rest,
+          label: t(`menus.${item.label.toLowerCase()}`),
+          icon: <i className={`fa-solid fa-${item.icon}`} />,
+          children: convertMenuItems(item.children, authUser, t),
+        }
+      }
+
+      return {
+        ...rest,
+        label: t(`menus.${item.label.toLowerCase()}`),
+        icon: <i className={`fa-solid fa-${item.icon}`} />,
+      }
+    })
+}
+
+/**
+ * Convert dropdown menu items from simple format to Ant Design Menu format
+ *
+ * @param {Array} items - Array of menu items with format:
+ *   {
+ *     onClick: function or string (path),
+ *     iconName: string (MdiIcon name),
+ *     iconColor: string (optional),
+ *     label: string (translation key),
+ *     type: string (optional, e.g., 'divider'),
+ *     key: string (optional, auto-generated if not provided)
+ *   }
+ * @param {Function} t - Translation function
+ * @returns {Array} - Converted menu items for Ant Design Menu
+ *
+ * @example
+ * const menuItems = [
+ *   {
+ *     onClick: '/profiles',
+ *     iconName: 'mdiAccountOutline',
+ *     label: 'profile',
+ *   },
+ *   {
+ *     onClick: onLogout,
+ *     iconName: 'mdiLogout',
+ *     iconColor: COLORS.RED_LIGHT,
+ *     label: 'logout',
+ *   },
+ *   { type: 'divider' },
+ * ]
+ *
+ * const items = convertDropdownMenuItems(menuItems, t)
+ */
+export const convertDropdownMenuItems = (items, t) => {
+  return items.map((item, index) => {
+    // Handle divider
+    if (item.type === 'divider') {
+      return { type: 'divider' }
+    }
+
+    // Generate key if not provided
+    const key = item.key || `menu-item-${index + 1}`
+
+    // Handle onClick - can be function or string (path)
+    const handleClick = () => {
+      if (typeof item.onClick === 'function') {
+        item.onClick()
+      } else if (typeof item.onClick === 'string') {
+        history.push(item.onClick)
+      }
+    }
+
+    // Build label with icon and text
+    const label = (
+      <div className="flex items-center" onClick={handleClick}>
+        <MdiIcon name={item.iconName} color={item.iconColor} />
+        <span className="pl-4">{t(item.label)}</span>
+      </div>
+    )
+
+    return {
+      key,
+      className: 'pt-3 pb-3',
+      label,
+    }
+  })
 }

@@ -26,10 +26,49 @@ aside.ant-layout-sider {
 header.ant-layout-header {
   background-color: $mainColor;
   padding: 0;
-  height: $heightHeader;
+  height: $heightHeader !important;
   display: flex;
   justify-content: space-between;
   color: white;
+}
+
+/* Menu Bar Color */
+.ant-menu-submenu-selected .ant-menu-submenu-title{
+  color: $mainColor !important;
+}
+
+.ant-menu-item-selected {
+  color: $mainColor !important;
+  background-color: rgba($mainColor, 0.1) !important;
+}
+
+.ant-layout-header .ant-menu {
+  height: $heightHeader !important;
+  line-height: $heightHeader !important;
+}
+
+.ant-menu-horizontal {
+  background: transparent !important;
+  border-bottom: none !important;
+
+  .ant-menu-item-icon {
+    vertical-align: 0;
+  }
+
+  .ant-menu-item-selected,
+  .ant-menu-item:hover {
+    color: white !important;
+  }
+
+  .ant-menu-item:hover::after,
+  .ant-menu-item-selected::after {
+    border-bottom: none !important;
+  }
+
+  .ant-menu-item::after,
+  .ant-menu-submenu::after {
+    display: none !important;
+  }
 }
 
 /* hidden-scrollbar */
