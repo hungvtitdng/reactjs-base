@@ -33,7 +33,7 @@ const HeaderMain = ({ isCollapsed, onCollapse }) => {
     logoutRequest()
   }
 
-  const menuItems = [
+  const menuItems = convertDropdownMenuItems([
     {
       onClick: '/profiles',
       iconName: 'mdiAccountOutline',
@@ -51,11 +51,11 @@ const HeaderMain = ({ isCollapsed, onCollapse }) => {
       iconColor: COLORS.RED_LIGHT,
       label: 'logout',
     },
-  ]
+  ], t)
 
-  const headerMenuItems = [
+  const headerLeftMenuItems = [
     {
-      key: '/',
+      key: '1',
       label: 'turnkey',
       icon: 'layer-group',
     },
@@ -71,8 +71,6 @@ const HeaderMain = ({ isCollapsed, onCollapse }) => {
     },
   ]
 
-  const items = convertDropdownMenuItems(menuItems, t)
-
   return (
     <Layout.Header>
       <div className="flex items-center">
@@ -81,12 +79,12 @@ const HeaderMain = ({ isCollapsed, onCollapse }) => {
           mode="horizontal"
           className="ml-6"
           defaultSelectedKeys={['1']}
-          items={convertMenuItems(headerMenuItems, authUser, t)}
+          items={convertMenuItems(headerLeftMenuItems, authUser, t)}
           disabledOverflow
         />
       </div>
       <div className="flex justify-end items-center mr-4">
-        <Dropdown placement="bottomRight" menu={{ items }} trigger={['click']}>
+        <Dropdown placement="bottomRight" menu={{ menuItems }} trigger={['click']}>
           <div className="flex items-center pointer relative pl-3 h-full">
             <span className="fz-4 pr-2 md-hide">{authUser?.last_name} {authUser?.first_name}</span>
             <Avatar path={authUser?.avatar?.upload_path} />

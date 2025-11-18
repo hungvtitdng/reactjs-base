@@ -105,7 +105,7 @@ export const convertMenuItems = (items, authUser, t) => {
         return {
           ...rest,
           label: t(`menus.${item.label.toLowerCase()}`),
-          icon: <i className={`fa-solid fa-${item.icon}`} />,
+          icon: item.icon ? <i className={`fa-solid fa-${item.icon}`} /> : null,
           children: convertMenuItems(item.children, authUser, t),
         }
       }
@@ -113,44 +113,11 @@ export const convertMenuItems = (items, authUser, t) => {
       return {
         ...rest,
         label: t(`menus.${item.label.toLowerCase()}`),
-        icon: <i className={`fa-solid fa-${item.icon}`} />,
+        icon: item.icon ? <i className={`fa-solid fa-${item.icon}`} /> : null,
       }
     })
 }
 
-/**
- * Convert dropdown menu items from simple format to Ant Design Menu format
- *
- * @param {Array} items - Array of menu items with format:
- *   {
- *     onClick: function or string (path),
- *     iconName: string (MdiIcon name),
- *     iconColor: string (optional),
- *     label: string (translation key),
- *     type: string (optional, e.g., 'divider'),
- *     key: string (optional, auto-generated if not provided)
- *   }
- * @param {Function} t - Translation function
- * @returns {Array} - Converted menu items for Ant Design Menu
- *
- * @example
- * const menuItems = [
- *   {
- *     onClick: '/profiles',
- *     iconName: 'mdiAccountOutline',
- *     label: 'profile',
- *   },
- *   {
- *     onClick: onLogout,
- *     iconName: 'mdiLogout',
- *     iconColor: COLORS.RED_LIGHT,
- *     label: 'logout',
- *   },
- *   { type: 'divider' },
- * ]
- *
- * const items = convertDropdownMenuItems(menuItems, t)
- */
 export const convertDropdownMenuItems = (items, t) => {
   return items.map((item, index) => {
     // Handle divider
