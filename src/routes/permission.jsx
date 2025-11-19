@@ -1,5 +1,5 @@
 import { USER_ROLES_LEVELS } from '../config/constants'
-import { deleteStorage, getAccessToken } from '../utils/helpers'
+// import { deleteStorage, getAccessToken } from '../utils/helpers'
 
 export const hasAuth = () => {
   return true

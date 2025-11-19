@@ -1,4 +1,3 @@
-import 'react-quill-new/dist/quill.snow.css'
 import 'antd/dist/reset.css'
 import './assets/css/global.scss'
 import './assets/css/main.scss'
