@@ -5,14 +5,12 @@ import lodash from 'lodash'
 import { useTranslation } from 'react-i18next'
 
 import FormWrapper from './FormWrapper'
-import UploadWrap from './field/UploadImageField'
 import InputForm from './field/InputField'
 import SelectField from './field/SelectField'
 import DateTimeForm from './field/DateTimeField'
 import { FIELD_TYPES, GUTTER, HM_FORMAT, HMS_FORMAT, YMD_FORMAT } from '../../config/constants'
 import CheckboxGroupField from './field/CheckboxGroupField'
 import TextareaField from './field/TextareaField'
-import EditorField from './field/EditorField'
 
 const Form = ({ initialValues, onFinish, actionButtons, onCancel, fieldItems, submitting, form: externalForm, saveActionIcon, saveActionLabel, className }) => {
   const { t } = useTranslation()
@@ -91,22 +89,6 @@ const Form = ({ initialValues, onFinish, actionButtons, onCancel, fieldItems, su
         let item = null
 
         switch (fi.type) {
-          case FIELD_TYPES.IMAGE:
-            item = (
-              <UploadWrap
-                key={fi.attribute}
-                label={t(`attributes.${fi.attribute}`)}
-                attribute={fi.attribute}
-                action={fi.action}
-                rules={[{ required: fi.required, message: t('messages.input', { attr: t(`attributes.${fi.attribute}`) }) }]}
-                width={fi.width ?? 300}
-                height={fi.height ?? 200}
-                initObj={lodash.get(initialValues, fi.objName, null)}
-                onFinish={(uploadData) => onUploadImage(fi.attribute, uploadData)}
-              />
-            )
-            break
-
           case FIELD_TYPES.DATE:
           case FIELD_TYPES.TIME:
             item = <DateTimeForm key={fi.attribute} {...fi} />
@@ -122,10 +104,6 @@ const Form = ({ initialValues, onFinish, actionButtons, onCancel, fieldItems, su
 
           case FIELD_TYPES.TEXTAREA:
             item = <TextareaField key={fi.attribute} {...fi} />
-            break
-
-          case FIELD_TYPES.EDITOR:
-            item = <EditorField key={fi.attribute} {...fi} />
             break
 
           default:
